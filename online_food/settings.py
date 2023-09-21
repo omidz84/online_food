@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'food',
     'user',
+    'shop_admin',
 
 ]
 
