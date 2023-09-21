@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'check_system_init',
     'landing',
     'core',
-    'admin',
     'food',
     'user',
 
