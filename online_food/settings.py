@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework_gis',
     'corsheaders',
     'rest_framework_simplejwt',
     'drf_yasg',
@@ -64,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.middleware.CustomMiddleware'
+    # 'core.middleware.CustomMiddleware'
 ]
 
 ROOT_URLCONF = 'online_food.urls'
