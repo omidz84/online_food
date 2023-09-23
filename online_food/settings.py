@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     'check_system_init',
-    'landing',
+    'cart',
     'core',
     'food',
     'user',
