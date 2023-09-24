@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.middleware.CustomMiddleware'
+    # 'core.middleware.CustomMiddleware'
 ]
 
 ROOT_URLCONF = 'online_food.urls'
@@ -175,6 +175,12 @@ REDIS_JWT_TOKEN = redis.StrictRedis(host=REDIS_HOST,
 REDIS_CAPTCHA_TIME = 60
 REDIS_CAPTCHA = redis.StrictRedis(host=REDIS_HOST,
                                   port=REDIS_PORT, db=1)
+
+# redis code
+
+REDIS_CODE_TIME = 3 * 60
+REDIS_CODE = redis.StrictRedis(host=REDIS_HOST,
+                               port=REDIS_PORT, db=2)
 
 # DEFAULT_LOCATION = Point(0.0, 0.0)
 
