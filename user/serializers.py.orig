@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from rest_framework import serializers
 from .models import User, UserProfile
 from . import validators
@@ -41,3 +42,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserLogoutSerializer(serializers.Serializer):
     refreshToken = serializers.CharField()
+=======
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from .models import Address
+# Create your views here.
+
+
+class AddressSerializers(GeoFeatureModelSerializer):
+
+    class Meta:
+        model = Address
+        geo_field = "location"
+        fields = '__all__'
+>>>>>>> develop
