@@ -10,7 +10,8 @@ drf-yasg==1.21.7
 gunicorn==21.2.0
 inflection==0.5.1
 packaging==23.1
-psycopg2==2.9.7
+Pillow==10.0.1
+psycopg2-binary==2.9.7
 PyJWT==2.8.0
 python-decouple==3.8
 pytz==2023.3.post1
