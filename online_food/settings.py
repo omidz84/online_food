@@ -177,6 +177,12 @@ REDIS_CAPTCHA_TIME = 60
 REDIS_CAPTCHA = redis.StrictRedis(host=REDIS_HOST,
                                   port=REDIS_PORT, db=1)
 
+# redis code
+
+REDIS_CODE_TIME = 3 * 60
+REDIS_CODE = redis.StrictRedis(host=REDIS_HOST,
+                               port=REDIS_PORT, db=2)
+
 # DEFAULT_LOCATION = Point(0.0, 0.0)
 
 SWAGGER_SETTINGS = {

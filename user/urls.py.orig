@@ -1,4 +1,5 @@
 from django.urls import path
+<<<<<<< HEAD
 from . import views
 
 app_name = "user"
@@ -10,3 +11,10 @@ urlpatterns = [
     path("profile/", views.UserProfileAPIView.as_view(), name="user-profile"),
     path("logout/", views.UserLogoutAPIView.as_view(), name="user-logout"),
 ]
+=======
+from .views import AddressView
+
+urlpatterns = [
+    path('address/', AddressView.as_view(), name='Address_view')
+]
+>>>>>>> develop
