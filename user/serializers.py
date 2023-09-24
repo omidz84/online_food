@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import User, UserProfile
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
+
+from .models import MyUser, UserProfile, Address
 from . import validators
 
 
@@ -14,11 +16,11 @@ class UserSerializer(serializers.ModelSerializer):
     code = serializers.CharField()
 
     class Meta:
-        model = User
+        model = MyUser
         fields = ['phoneNumber', 'code']
 
     def create(self, validated_data):
-        user = User.objects.create(phoneNumber=validated_data['phoneNumber'])
+        user = MyUser.objects.create(phoneNumber=validated_data['phoneNumber'])
 
 # -----------
 
@@ -41,3 +43,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserLogoutSerializer(serializers.Serializer):
     refreshToken = serializers.CharField()
+
+
+class AddressSerializers(GeoFeatureModelSerializer):
+
+    class Meta:
+        model = Address
+        geo_field = "location"
+        fields = '__all__'
