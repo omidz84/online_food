@@ -12,7 +12,7 @@ from online_food.settings import REDIS_JWT_TOKEN, REDIS_REFRESH_TIME, REDIS_CODE
 from .utils import get_tokens, code
 from .models import MyUser, UserProfile
 from .serializers import UserSerializer, UserProfileSerializer, UserCodeSerializer, UserCreateRefreshSerializer, \
-    UserLogoutSerializer, AddressSerializers
+                         UserLogoutSerializer, AddressSerializers
 
 # Create your views here.
 
@@ -23,7 +23,7 @@ from .serializers import UserSerializer, UserProfileSerializer, UserCodeSerializ
 class UserCodeAPIView(APIView):
     serializer_class = UserCodeSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         translate(request)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -32,7 +32,7 @@ class UserCodeAPIView(APIView):
             "code": sent_code,
             "Message": _("The code is sent to the mobile.")
         }
-        REDIS_CODE.set(name=request.data['phoneNumber'], value=sent_code, ex=REDIS_CODE_TIME)
+        REDIS_CODE.set(name=request.data['phone_number'], value=sent_code, ex=REDIS_CODE_TIME)
         return Response(data, status.HTTP_201_CREATED)
 
 
@@ -42,42 +42,43 @@ class UserCodeAPIView(APIView):
 class UserAPIView(APIView):
     serializer_class = UserSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         translate(request)
         serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
 
-        if (REDIS_CODE.get(request.data["phoneNumber"]) is not None) and (request.data["code"] == REDIS_CODE.get(request.data["phoneNumber"]).decode('utf-8')):
+        if (REDIS_CODE.get(request.data["phone_number"]) is not None) and \
+           (request.data["code"] == REDIS_CODE.get(request.data["phone_number"]).decode('utf-8')):
             try:
-                user = MyUser.objects.get(phoneNumber=request.data["phoneNumber"])
+                user = MyUser.objects.get(phone_number=request.data["phone_number"])
                 tokens = get_tokens(user)
                 access_token = tokens['Access']
                 refresh_token = tokens['Refresh']
                 REDIS_JWT_TOKEN.set(name=refresh_token, value=refresh_token, ex=REDIS_REFRESH_TIME)
                 data = {
                     "user": {
-                        "phoneNumber": user.phoneNumber,
-                            "type": user.type
-                    },
-                    "AccessToken": access_token,
-                    "RefreshToken": REDIS_JWT_TOKEN.get(refresh_token),
-                    "Message": _("You are logined successfully")
-                }
-                return Response(data, status.HTTP_200_OK)
-
-            except MyUser.DoesNotExist:
-                user = MyUser.objects.create(phoneNumber=request.data['phoneNumber'])
-                tokens = get_tokens(user)
-                access_token = tokens['Access']
-                refresh_token = tokens['Refresh']
-                REDIS_JWT_TOKEN.set(name=refresh_token, value=refresh_token, ex=REDIS_REFRESH_TIME)
-                data = {
-                    "user": {
-                        "phoneNumber": user.phoneNumber,
+                        "phone_number": user.phone_number,
                         "type": user.type
                     },
                     "AccessToken": access_token,
                     "RefreshToken": REDIS_JWT_TOKEN.get(refresh_token),
+                    "Message": _("You are login successfully")
+                }
+                return Response(data, status.HTTP_200_OK)
+
+            except MyUser.DoesNotExist:
+                user = MyUser.objects.create(phone_number=request.data['phone_number'])
+                tokens = get_tokens(user)
+                access_token = tokens['Access']
+                refresh_token = tokens['Refresh']
+                REDIS_JWT_TOKEN.set(name=refresh_token, value=refresh_token, ex=REDIS_REFRESH_TIME)
+                data = {
+                    "user": {
+                        "phone_number": user.phone_number,
+                        "type": user.type
+                    },
+                    "Access Token": access_token,
+                    "Refresh Token": REDIS_JWT_TOKEN.get(refresh_token),
                     "Message": _("You are registered successfully")
                 }
                 return Response(data, status.HTTP_201_CREATED)
@@ -90,21 +91,24 @@ class UserAPIView(APIView):
 class UserCreateRefreshAPIView(APIView):
     serializer_class = UserCreateRefreshSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         translate(request)
         serializer = self.serializer_class(data=request.data)
 
         try:
-            token = request.data["refreshToken"]
+            token = request.data["refresh_token"]
             REDIS_JWT_TOKEN.delete(token)
-            decodedToken = RefreshToken(token)
-            user = MyUser.objects.get(id=decodedToken["user_id"])
-            accessRefreshToken = get_tokens(user)
-            print(accessRefreshToken)
-            accessToken = accessRefreshToken["Access"]
+            decoded_token = RefreshToken(token)
+            user = MyUser.objects.get(id=decoded_token["user_id"])
+            access_refresh_token = get_tokens(user)
+            access_token = access_refresh_token["Access"]
             REDIS_JWT_TOKEN.set(name=token, value=token, ex=REDIS_REFRESH_TIME)
-            return Response({"New Access Token": accessToken}, status.HTTP_201_CREATED)
-        except MyUser.DoesNotExist:
+            data = {
+                "Access Token": access_token,
+                "Refresh Token": token
+            }
+            return Response(data, status.HTTP_201_CREATED)
+        except:
             return Response({"Message": _("Token is Expired")})
 
 
@@ -115,13 +119,27 @@ class UserCreateRefreshAPIView(APIView):
 
 class UserProfileAPIView(APIView):
     serializer_class = UserProfileSerializer
+    lookup_field = "slug"
 
-    def post(self, request: Request):
+    # def get(self, request: Request, slug) -> Response:
+    #     user = UserProfile.objects.get(slug=slug)
+    #     return Response({user.first_name})
+
+    def post(self, request: Request) -> Response:
         translate(request)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"Message": _("Your Profile is Complete.")})
+
+
+
+# class UserProfileDetailAPIView(APIView):
+#     serializer_class = UserProfileSerializer
+#
+#     def get(self, request: Request, slug):
+#         try:
+#             user = UserProfile.objects.get(full_name=request.data["full_name"])
 
 # -----------------------------------------------------------------------
 
@@ -131,17 +149,19 @@ class UserProfileAPIView(APIView):
 class UserLogoutAPIView(APIView):
     serializer_class = UserLogoutSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         translate(request)
         serializer = self.serializer_class(data=request.data)
-        refreshToken = request.data["refreshToken"]
+        refresh_token = request.data["refresh_token"]
         try:
-            REDIS_JWT_TOKEN.get(refreshToken)
-            REDIS_JWT_TOKEN.delete(refreshToken)
+            REDIS_JWT_TOKEN.get(refresh_token)
+            REDIS_JWT_TOKEN.delete(refresh_token)
             return Response({"Message": _("You Are Logged Out Successfully")})
         except Exception:
             return Response({"Message": _("There is No Refresh Token in Redis")})
 
+
+# ----------------------------------------------------------------------------------
 
 class AddressView(GenericAPIView):
     serializer_class = AddressSerializers
