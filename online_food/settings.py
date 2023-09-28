@@ -195,3 +195,6 @@ LOCALE_PATHS = (
     os.path.join(os.path.dirname(__file__), "locale"),
 )
 
+
+MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_URL = 'media/'
