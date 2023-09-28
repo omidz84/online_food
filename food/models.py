@@ -26,7 +26,7 @@ class Food(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name=_('name'), unique=True)
     description = models.TextField(verbose_name=_('description'))
     price = models.IntegerField(db_index=True, verbose_name=_('price'))
-    image = models.ImageField(upload_to='images/', verbose_name=_('image'))
+    image = models.ImageField(upload_to='images/', verbose_name=_('image'), null=True, blank=True)
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, db_index=True, verbose_name=_('category'))
     count = models.SmallIntegerField(verbose_name=_('count'))
     slug = models.SlugField(max_length=100, db_index=True, verbose_name=_('slug'), unique=True, blank=True)
