@@ -1,8 +1,21 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
-from .models import MyUser, UserProfile, Address
+from .models import UserType, MyUser, UserProfile, Address
 from . import validators
+
+
+# The serializer "UserTypeSerializer" is for defining a model (table) for registering type of users
+# 1: admin, 2: delivery, 3:customer.
+
+
+class UserTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserType
+        fields = "__all__"
+
+#  ------------------------------------------------------------
 
 
 # The serializer "UserCodeSerializer" is for creating a form to send code to the user who wants to
