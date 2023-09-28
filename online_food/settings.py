@@ -180,7 +180,7 @@ REDIS_CAPTCHA = redis.StrictRedis(host=REDIS_HOST,
 
 # redis code
 
-REDIS_CODE_TIME = 3 * 60
+REDIS_CODE_TIME = 2 * 60
 REDIS_CODE = redis.StrictRedis(host=REDIS_HOST,
                                port=REDIS_PORT, db=2)
 
