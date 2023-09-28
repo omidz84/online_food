@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/token/', include('check_system_init.urls')),
     path('api/user/', include("user.urls", namespace="user")),
     path('api/food/', include('food.urls')),
+    path('api/cart/', include('cart.urls')),
 
     # swagger
     path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

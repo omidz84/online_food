@@ -10,7 +10,10 @@ from . import validators
 # We have two models (tables) in app "user": MyUser, UserProfile.
 
 class UserType(models.Model):
-    title = models.CharField(max_length=200, unique=True, verbose_name=_("Title of User"))
+    """
+        In this model(table), 1 means "admin", 2 means "delivery", 3 means "customer".
+    """
+    title = models.CharField(max_length=200, unique=True, verbose_name=_("Title"))
 
     class Meta:
         verbose_name = _("User Type")
