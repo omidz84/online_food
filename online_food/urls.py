@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/user/', include("user.urls")),
     path('api/food/', include('food.urls')),
 
+
     # swagger
     path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
