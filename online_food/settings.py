@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'shop_admin',
     'contact_us'
 
+
 ]
 
 MIDDLEWARE = [
