@@ -19,8 +19,8 @@ class Status(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, verbose_name=_('user'))
     foods = models.JSONField(default=list, verbose_name=_('foods'))
-    final_price = models.IntegerField(verbose_name=_('final price'))
-    status = models.ForeignKey(Status, on_delete=models.PROTECT, db_index=True, verbose_name=_('status'))
+    final_price = models.JSONField(default=list, verbose_name=_('final price'))
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, db_index=True, verbose_name=_('status'), default=1)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated_at'))
 
