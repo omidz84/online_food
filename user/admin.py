@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MyUser, UserProfile
+from .models import MyUser, UserProfile, UserType
 
 # Register your models here.
 
@@ -14,4 +14,9 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(UserType)
+class UserTypeAdmin(admin.ModelAdmin):
     pass
