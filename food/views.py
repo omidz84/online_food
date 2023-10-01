@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -28,6 +29,9 @@ class FoodCategoryCreate(generics.ListCreateAPIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
+# -------------------------------------------------------------------
+
+
 class DetailFoodCategoryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FoodCategory.objects.all()
     serializer_class = FoodCategorySerializer
@@ -55,6 +59,9 @@ class DetailFoodCategoryView(generics.RetrieveUpdateDestroyAPIView):
 # endregion
 
 
+# -------------------------------------------------------------------
+
+
 class FoodCategoryView(generics.GenericAPIView):
     queryset = FoodCategory.objects.filter
     serializer_class = FoodCategoryViewSerializer
@@ -70,6 +77,9 @@ class FoodCategoryView(generics.GenericAPIView):
             return Response({"msg": [_('this category_id might be wrong')]}, status.HTTP_400_BAD_REQUEST)
 
 
+# -------------------------------------------------------------------
+
+
 class CreatFoodView(generics.CreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
@@ -80,6 +90,35 @@ class CreatFoodView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
+
+
+class DetailFoodView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer
+    lookup_field = 'slug'
+
+    def retrieve(self, request, *args, **kwargs):
+        translate(request)
+        instance = self.get_object()
+        serializer = self.serializer_class(instance)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        translate(request)
+        instance = self.get_object()
+        serializer = self.serializer_class(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        translate(request)
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(None, status.HTTP_204_NO_CONTENT)
+
+
+# -------------------------------------------------------------------
 
 
 class FoodViewInEachCategory(generics.GenericAPIView):
