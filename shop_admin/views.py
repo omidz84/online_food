@@ -23,9 +23,8 @@ class AdminAPIView(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         # We add the following code to validate the "phone number". 09130974226 is the same 9130974226.
-        phone_number = check_phone(serializer.validated_data["phone_number"])
+        phone_number = check_phone(request.data["phone_number"])
         try:
-
             user = MyUser.objects.get(phone_number=phone_number)
             data = {
                 "user_id": user.id,
