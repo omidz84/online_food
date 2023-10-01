@@ -150,6 +150,7 @@ class ShowOrdersView(GenericAPIView):
                         'food_price': cart.final_price[str(food.id)],
                         'food_count': food.count,
                         'image': '/media/' + str(food.image),
+                        'category': food.category.title,
                         'quantity': quantity
                     })
 
