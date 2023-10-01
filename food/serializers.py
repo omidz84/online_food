@@ -10,8 +10,14 @@ class FoodCategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# ------------------------------------------------------------
+
+
 class FoodCategoryViewSerializer(serializers.Serializer):
     food_category_id = serializers.IntegerField()
+
+
+# ------------------------------------------------------------
 
 
 class FoodSerializer(serializers.ModelSerializer):
