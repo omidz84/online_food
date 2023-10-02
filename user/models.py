@@ -60,5 +60,5 @@ class UserProfile(models.Model):
 
 
 class Address(models.Model):
-    address = model.TextField(verbose_name='آدرس')
-    location = model.GeometryField(geography=True, null=True, blank=True, verbose_name='موقعیت')
+    address = model.TextField(verbose_name=_('address'))
+    location = model.GeometryField(geography=True, null=True, blank=True, verbose_name=_('location'))
