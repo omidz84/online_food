@@ -92,6 +92,9 @@ class CreatFoodView(generics.CreateAPIView):
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
+# -------------------------------------------------------------------
+
+
 class DetailFoodView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
