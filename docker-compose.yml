@@ -1,0 +1,96 @@
+version: '3.7'
+
+services: 
+#Redis-----------------------------------------------------------------------------------------
+    online-food-redis:
+        image: redis:latest
+        container_name: online_food_redis
+        hostname: online_food_redis
+        env_file:
+            - .env
+        ports:
+            - "6379:6379"
+        volumes:
+            - online_food_redis_data:/data
+        networks:
+            - online_food
+        # command: ["sh", "-c", "rm -f /data/dump.rdb && redis-server --save '' --appendonly no --requirepass $PASSWORD_REDIS"]
+        command: ["sh", "-c", "rm -f /data/dump.rdb && redis-server --save '' --appendonly no "]
+        restart: on-failure
+
+
+# #Nginx-----------------------------------------------------------------------------------------
+#     its-nginx:
+#         image: harbor.sahimco.ir/public/nginx:latest
+#         container_name: its_nginx
+#         hostname: its_nginx
+#         ports:
+#             - 80:80
+#             - 443:443
+#         volumes:
+#             - ./docker/compose/nginx_config/nginx.conf:/etc/nginx/nginx.conf
+#             - ./docker/compose/nginx_config/conf.d/:/etc/nginx/conf.d
+#             - its_media_data:/django_media:ro
+#             - its_statics_data:/django_statics:ro
+#         networks:
+#             - its
+#         depends_on:
+#             - its-api
+#             - its-socket
+#         restart: on-failure
+    
+
+#Postgres-----------------------------------------------------------------------------------------
+    online-food-postgres:
+        image: postgis/postgis:latest
+        container_name: online_food_postgresql
+        hostname: online_food_postgresql
+        environment: 
+            - POSTGRES_DB=online_food_db
+            - POSTGRES_USER=online_food_user
+            - POSTGRES_PASSWORD=hdfjhsfhsdfg
+        ports:
+            - "5432:5432"
+        volumes:
+            - online_food_postgresql_data:/var/lib/postgresql/data
+        networks:
+            - online_food
+        restart: on-failure
+
+#API-----------------------------------------------------------------------------------------
+    online-food-api:
+        image: online-food-api:latest
+        container_name: online_food_api
+        hostname: online_food_api
+        depends_on: 
+            - online-food-postgres
+            - online-food-redis
+        ports:
+            - "8088:8088"
+        # command: ["ping", "8.8.8.8"]
+        env_file: 
+            - .env
+        volumes:
+            - online_food_media_data:/app/media
+            - online_food_static_data:/app/static
+        networks:
+            - online_food
+        restart: on-failure
+
+
+
+volumes: 
+    online_food_media_data:
+        external: true
+    online_food_static_data:
+        external: true
+    online_food_postgresql_data:
+        external: true
+    online_food_redis_data:
+        external: true
+          
+
+networks:
+    online_food:
+        external: true
+        name: online_food_net
