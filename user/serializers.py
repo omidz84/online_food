@@ -77,3 +77,11 @@ class AddressSerializers(GeoFeatureModelSerializer):
         model = Address
         geo_field = "location"
         fields = '__all__'
+
+
+class MyUserSerializers(serializers.ModelSerializer):
+    type = UserTypeSerializer(read_only=True)
+
+    class Meta:
+        model = MyUser
+        fields = ['phone_number', 'type']
