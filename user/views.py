@@ -11,10 +11,9 @@ from core.utils import translate
 from core.permisions import IsAdmin, IsAdminOrReadOnly
 from online_food.settings import REDIS_JWT_TOKEN, REDIS_REFRESH_TIME, REDIS_CODE, REDIS_CODE_TIME
 from .utils import get_tokens, code
-from .models import MyUser, UserProfile
+from .models import MyUser, UserProfile, Address
 from .serializers import UserSerializer, UserProfileSerializer, UserCodeSerializer, UserCreateRefreshSerializer, \
-    UserLogoutSerializer, AddressSerializers, UserTypeSerializer
-
+    UserLogoutSerializer, AddressSerializers, UserTypeSerializer, UserAddressViewSerializer
 
 # Create your views here.
 
@@ -191,12 +190,27 @@ class UserLogoutAPIView(APIView):
 
 # ----------------------------------------------------------------------------------
 
-class AddressView(GenericAPIView):
+class AddAddressView(GenericAPIView):
     serializer_class = AddressSerializers
 
-    def post(self, request):
+    def post(self, request: Request):
         translate(request)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class UserAddressView(GenericAPIView):
+    serializer_class = UserAddressViewSerializer
+    queryset = Address.objects.filter
+
+    def post(self, request: Request):
+        translate(request)
+        try:
+            instance = self.queryset(user_id=request.data['user'])
+            serializer = AddressSerializers(instance, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except:
+            return Response({'msg': [_('user does not exist')]}, status.HTTP_400_BAD_REQUEST)
