@@ -11,5 +11,6 @@ urlpatterns = [
     path("profile/", views.UserProfileAPIView.as_view(), name="user-profile"),
     path("profile/<slug:slug>/", views.UserProfileDetailAPIView.as_view(), name="user-profile-slug"),
     path("logout/", views.UserLogoutAPIView.as_view(), name="user-logout"),
-    path('address/', views.AddressView.as_view(), name='Address_view')
+    path('address/', views.UserAddressView.as_view(), name="user_address_view"),
+    path('address/add/', views.AddAddressView.as_view(), name='add_address_view')
 ]
