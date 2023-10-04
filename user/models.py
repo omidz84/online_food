@@ -62,5 +62,15 @@ class UserProfile(models.Model):
 
 
 class Address(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name=_('user'))
     address = model.TextField(verbose_name=_('address'))
     location = model.GeometryField(geography=True, null=True, blank=True, verbose_name=_('location'))
+
+    def __str__(self):
+        return f"{self.user} / {self.address}"
+
+    class Meta:
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
+
+

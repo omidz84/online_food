@@ -5,12 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 
-from . models import Cart, CartItem
+from user.models import UserProfile
+from . models import Cart, CartItem, LogStatus
 from food.models import Food
 from .serializers import CartAddSerializers,\
     SaveCartSerializers,\
     ShowOrdersSerializers, \
-    ShowOrdersPostSerializers
+    ShowOrdersPostSerializers,\
+    DetailOrderSerializers, \
+    UpdateStatusCartSerializers
 from core.utils import translate
 
 # Create your views here.
@@ -88,7 +91,8 @@ class ShowCartView(GenericAPIView):
                     'food_price': food.price,
                     'food_count': food.count,
                     'image': '/media/' + str(food.image),
-                    'quantity': quantity
+                    'quantity': quantity,
+                    'final_price': food.price * quantity
                 })
                 final_price += food.price * quantity
             except Food.DoesNotExist:
@@ -160,6 +164,7 @@ class ShowOrdersView(GenericAPIView):
                     },
                     'foods': foods,
                     'total_price': total_price,
+                    'address': cart.address.address,
                     'status': cart.status.status,
                     'created_at': cart.created_at
                 })
@@ -201,6 +206,7 @@ class ShowAllOrdersAdminView(GenericAPIView):
                     },
                     'foods': foods,
                     'total_price': total_price,
+                    'address': cart.address.address,
                     'status': cart.status.status,
                     'created_at': cart.created_at
                 })
@@ -208,3 +214,61 @@ class ShowAllOrdersAdminView(GenericAPIView):
             return Response(all_items, status.HTTP_200_OK)
         except:
             return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
+
+
+class DetailOrderView(GenericAPIView):
+    serializer_class = DetailOrderSerializers
+    queryset = Cart.objects.all()
+
+    def post(self, request: Request):
+        translate(request)
+        try:
+            get_cart = Cart.objects.get(id=request.data['cart_id'])
+            items = CartItem.objects.filter(cart_id=get_cart.id)
+            foods = []
+            total_price = 0
+            for item in items:
+                foods.append({
+                    'food_name': item.food.name,
+                    'food_image': '/media/' + str(item.food.image),
+                    'food_category': item.food.category.title,
+                    'food_price': item.price,
+                    'quantity': item.quantity,
+                    'final_price': item.total_price,
+                })
+                total_price += item.total_price
+            user_profile = UserProfile.objects.get(user_id=get_cart.user.id)
+            cart = {
+                'cart_id': get_cart.id,
+                'user': {
+                    'id': get_cart.user.id,
+                    'phone_number': get_cart.user.phone_number,
+                    'first_name': user_profile.first_name,
+                    'last_name': user_profile.last_name
+                },
+                'foods': foods,
+                'total_price': total_price,
+                'address': {
+                    'address': get_cart.address.address,
+                    'location': str(get_cart.address.location)
+                },
+                'status': get_cart.status.status,
+                'created_at': get_cart.created_at
+            }
+            print(cart)
+            return Response(cart, status.HTTP_200_OK)
+        except:
+            return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateStatusCartView(GenericAPIView):
+    serializer_class = UpdateStatusCartSerializers
+    queryset = Cart.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializers = self.serializer_class(instance, data=request.data)
+        serializers.is_valid()
+        serializers.save()
+        LogStatus.objects.create(cart_id=serializers.data['id'], status_id=serializers.data['status'])
+        return Response(serializers.data)

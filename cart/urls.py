@@ -11,4 +11,6 @@ urlpatterns = [
     path('save/', views.SaveCartView.as_view(), name='save'),
     path('orders/', views.ShowOrdersView.as_view(), name='orders'),
     path('orders/all/', views.ShowAllOrdersAdminView.as_view(), name='all_orders'),
+    path('orders/detail/', views.DetailOrderView.as_view(), name='detail_orders'),
+    path('orders/status/update/<int:pk>/', views.UpdateStatusCartView.as_view(), name='update_orders'),
 ]
