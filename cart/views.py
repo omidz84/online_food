@@ -167,6 +167,7 @@ class ShowOrdersView(GenericAPIView):
             return Response(all_item, status.HTTP_200_OK)
         except:
             return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
+    #
 
 
 class ShowAllOrdersAdminView(GenericAPIView):

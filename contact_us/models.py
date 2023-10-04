@@ -16,7 +16,8 @@ class ContactUs(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
 
     class Meta:
-        verbose_name = 'contact us'
+        verbose_name = _('contact us')
+        verbose_name_plural = _('contacts us')
 
     def __str__(self):
         return f'{self.title}/{self.phone_number}'
