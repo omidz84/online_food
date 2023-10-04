@@ -5,10 +5,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 
-from . models import Cart, LogStatus, Status
-from user.models import MyUser, UserProfile
+from . models import Cart, CartItem
 from food.models import Food
-from .serializers import CartAddSerializers, SaveCartSerializers, ShowOrdersSerializers
+from .serializers import CartAddSerializers,\
+    SaveCartSerializers,\
+    ShowOrdersSerializers, \
+    ShowOrdersPostSerializers
 from core.utils import translate
 
 # Create your views here.
@@ -100,69 +102,107 @@ class SaveCartView(GenericAPIView):
 
     def post(self, request: Request):
         translate(request)
-        cart = request.session.get('cart')
-        final_price = {}
-        if not cart:
-            return Response({'msg': _('The cart is empty')}, status=status.HTTP_400_BAD_REQUEST)
-        for food_id, quantity in cart.items():
-            try:
-                food = Food.objects.get(id=food_id)
-                final_price[food.id] = food.price
-                food.count = food.count - quantity
-                food.save()
-            except Food.DoesNotExist:
-                pass
 
-        serializer = self.serializer_class(data={
-            'user': request.data['user'],
-            'foods': cart,
-            'final_price': final_price
-        })
-        if serializer.is_valid():
-            serializer.save()
+        try:
+            serializers = self.serializer_class(data=request.data)
+            serializers.is_valid()
+            serializers.save()
+            carts = request.session.get('cart')
+            for food, quantity in carts.items():
+                food = Food.objects.get(id=food)
+                if food.count > quantity:
+                    CartItem.objects.create(cart_id=serializers.data['id'],
+                                            food_id=food.id,
+                                            quantity=quantity,
+                                            price=food.price
+                                            )
+                    food.count = food.count - quantity
+                    food.save()
+                else:
+                    Cart.objects.get(id=serializers.data['id']).delete()
+                    return Response({'msg': _('Quantity requested is more than stock')}, status.HTTP_400_BAD_REQUEST)
             request.session.clear()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response({'msg': _('ERROR!!!')}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'msg': _('The cart has been saved successfully')})
+        except:
+            return Response({'msg': _('error')})
 
 
 class ShowOrdersView(GenericAPIView):
-    serializer_class = ShowOrdersSerializers
+    serializer_class = ShowOrdersPostSerializers
     queryset = Cart.objects.all()
 
     def post(self, request: Request):
         translate(request)
         try:
-            carts = Cart.objects.filter(user=request.data['user_id'])
-            a_carts = []
+            carts = Cart.objects.filter(user=request.data['user_id']).order_by('-created_at')
+            all_item = []
             for cart in carts:
-                total_price = []
+                items = CartItem.objects.filter(cart_id=cart.id)
                 foods = []
-                for price, count in zip(cart.final_price.values(), cart.foods.values()):
-                    final_price = price * count
-                    total_price.append(final_price)
-
-                for food_id, quantity in cart.foods.items():
-                    food = Food.objects.get(id=food_id)
+                total_price = 0
+                for item in items:
                     foods.append({
-                        'food_id': food.id,
-                        'food_name': food.name,
-                        'food_price': cart.final_price[str(food.id)],
-                        'food_count': food.count,
-                        'image': '/media/' + str(food.image),
-                        'category': food.category.title,
-                        'quantity': quantity
+                        'food_name': item.food.name,
+                        'food_image': '/media/' + str(item.food.image),
+                        'food_category': item.food.category.title,
+                        'food_price': item.price,
+                        'quantity': item.quantity,
+                        'final_price': item.total_price,
                     })
-
-                a_carts.append({
-                    'user': cart.user.id,
+                    total_price += item.total_price
+                all_item.append({
+                    'cart': cart.id,
+                    'user': {
+                        'id': cart.user.id,
+                        'phone_number': cart.user.phone_number
+                    },
                     'foods': foods,
-                    'final_price': cart.final_price,
-                    'total_price': sum(total_price),
+                    'total_price': total_price,
                     'status': cart.status.status,
                     'created_at': cart.created_at
                 })
 
-            return Response({'carts': a_carts})
+            return Response(all_item, status.HTTP_200_OK)
         except:
-            return Response({'msg': _('ERROR!!!')}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
+
+
+class ShowAllOrdersAdminView(GenericAPIView):
+    serializer_class = ShowOrdersSerializers
+    queryset = Cart.objects.all().order_by('-created_at')
+
+    def get(self, request: Request):
+        translate(request)
+        try:
+            carts = Cart.objects.all().order_by('-created_at')
+            all_items = []
+            for cart in carts:
+                items = CartItem.objects.filter(cart_id=cart.id)
+                foods = []
+                total_price = 0
+                for item in items:
+                    foods.append({
+                        'food_name': item.food.name,
+                        'food_image': '/media/' + str(item.food.image),
+                        'food_category': item.food.category.title,
+                        'food_price': item.price,
+                        'quantity': item.quantity,
+                        'final_price': item.total_price,
+                    })
+                    total_price += item.total_price
+                all_items.append({
+                    'cart': cart.id,
+                    'user': {
+                        'id': cart.user.id,
+                        'phone_number': cart.user.phone_number
+                    },
+                    'foods': foods,
+                    'total_price': total_price,
+                    'status': cart.status.status,
+                    'created_at': cart.created_at
+                })
+
+            return Response(all_items, status.HTTP_200_OK)
+        except:
+            return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
