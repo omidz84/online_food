@@ -8,11 +8,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from core.utils import translate
+from core.permisions import IsAdmin, IsAdminOrReadOnly
 from online_food.settings import REDIS_JWT_TOKEN, REDIS_REFRESH_TIME, REDIS_CODE, REDIS_CODE_TIME
 from .utils import get_tokens, code
 from .models import MyUser, UserProfile
 from .serializers import UserSerializer, UserProfileSerializer, UserCodeSerializer, UserCreateRefreshSerializer, \
-                         UserLogoutSerializer, AddressSerializers, UserTypeSerializer
+    UserLogoutSerializer, AddressSerializers, UserTypeSerializer
 
 
 # Create your views here.
@@ -20,6 +21,8 @@ from .serializers import UserSerializer, UserProfileSerializer, UserCodeSerializ
 
 class UserTypeAPIView(APIView):
     serializer_class = UserTypeSerializer
+
+    # permission_classes = [IsAdmin]
 
     def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
@@ -59,7 +62,7 @@ class UserAPIView(APIView):
         serializer.is_valid()
 
         if (REDIS_CODE.get(request.data["phone_number"]) is not None) and \
-           (request.data["code"] == REDIS_CODE.get(request.data["phone_number"]).decode('utf-8')):
+                (request.data["code"] == REDIS_CODE.get(request.data["phone_number"]).decode('utf-8')):
             try:
                 user = MyUser.objects.get(phone_number=request.data["phone_number"])
                 tokens = get_tokens(user)
@@ -71,7 +74,7 @@ class UserAPIView(APIView):
                         "user_id": user.id,
                         "phone_number": user.phone_number,
                         "type": user.type.title
-                 # Be careful, "type" in the model "MyUser" returns the entire row(object) in the model "UserType".
+                        # Be careful, "type" in the model "MyUser" returns the entire row(object) in the model "UserType".
                     },
                     "AccessToken": access_token,
                     "RefreshToken": REDIS_JWT_TOKEN.get(refresh_token),
@@ -97,6 +100,7 @@ class UserAPIView(APIView):
                 return Response(data, status=status.HTTP_201_CREATED)
         else:
             return Response({"Message": _("The code is not valid")}, status=status.HTTP_400_BAD_REQUEST)
+
 
 # -------------
 
@@ -140,6 +144,7 @@ class UserProfileAPIView(APIView):
         serializer.save()
         return Response({"Message": _("Your Profile is Complete.")}, status=status.HTTP_201_CREATED)
 
+
 # ---------
 
 
@@ -164,6 +169,8 @@ class UserProfileDetailAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # -----------------------------------------------------------------------
 
 

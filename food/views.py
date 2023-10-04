@@ -8,12 +8,14 @@ from .serializers import FoodCategorySerializer, FoodCategoryViewSerializer,\
     FoodSerializer
 from .models import FoodCategory, Food
 from core.utils import translate
+from core.permisions import IsAdmin, IsAdminOrReadOnly
 
 
 # region CRUD of food category
 class FoodCategoryCreate(generics.ListCreateAPIView):
     queryset = FoodCategory.objects.all()
     serializer_class = FoodCategorySerializer
+    # permission_classes = [IsAdminOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         translate(request)
@@ -35,6 +37,7 @@ class FoodCategoryCreate(generics.ListCreateAPIView):
 class DetailFoodCategoryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FoodCategory.objects.all()
     serializer_class = FoodCategorySerializer
+    # permission_classes = [IsAdminOrReadOnly]
     lookup_field = 'slug'
 
     def retrieve(self, request, *args, **kwargs):
@@ -83,6 +86,7 @@ class FoodCategoryView(generics.GenericAPIView):
 class CreatFoodView(generics.CreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+    # permission_classes = [IsAdmin]
 
     def create(self, request, *args, **kwargs):
         translate(request)
@@ -95,6 +99,7 @@ class CreatFoodView(generics.CreateAPIView):
 class DetailFoodView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+    # permission_classes = [IsAdminOrReadOnly]
     lookup_field = 'slug'
 
     def retrieve(self, request, *args, **kwargs):
