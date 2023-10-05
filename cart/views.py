@@ -15,7 +15,7 @@ from .serializers import CartAddSerializers,\
     DetailOrderSerializers, \
     UpdateStatusCartSerializers
 from core.utils import translate
-from core.permisions import IsAuthenticated, IsAdmin
+from core.permisions import IsAuthenticated, IsAdmin, IsAdminOrDelivery
 
 # Create your views here.
 
@@ -267,7 +267,7 @@ class DetailOrderView(GenericAPIView):
 class UpdateStatusCartView(GenericAPIView):
     serializer_class = UpdateStatusCartSerializers
     queryset = Cart.objects.all()
-    permission_classes = [IsAdmin]
+    permission_classes = [IsAdminOrDelivery]
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
