@@ -1,6 +1,7 @@
 from django.utils.translation import gettext as _
-from rest_framework.generics import GenericAPIView
+from django.core.exceptions import ObjectDoesNotExist
 
+from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
@@ -73,7 +74,8 @@ class UserAPIView(APIView):
                         "user_id": user.id,
                         "phone_number": user.phone_number,
                         "type": user.type.title
-                        # Be careful, "type" in the model "MyUser" returns the entire row(object) in the model "UserType".
+                        # Be careful, "type" in the model "MyUser" returns the entire row(object)
+                        # in the model "UserType".
                     },
                     "AccessToken": access_token,
                     "RefreshToken": REDIS_JWT_TOKEN.get(refresh_token),
@@ -125,7 +127,7 @@ class UserCreateRefreshAPIView(APIView):
                 "Refresh Token": refresh_token
             }
             return Response(data, status=status.HTTP_201_CREATED)
-        except:
+        except ObjectDoesNotExist:
             return Response({"Message": _("Token is Expired")}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -184,7 +186,7 @@ class UserLogoutAPIView(APIView):
             token = REDIS_JWT_TOKEN.get(refresh_token)
             REDIS_JWT_TOKEN.delete(token)
             return Response({"Message": _("You Are Logged Out Successfully")}, status=status.HTTP_201_CREATED)
-        except:
+        except ObjectDoesNotExist:
             return Response({"Message": _("There is No Refresh Token in Redis")}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -212,5 +214,5 @@ class UserAddressView(GenericAPIView):
             serializer = AddressSerializers(instance, many=True)
             return Response(serializer.data, status.HTTP_200_OK)
 
-        except:
+        except ObjectDoesNotExist:
             return Response({'msg': [_('user does not exist')]}, status.HTTP_400_BAD_REQUEST)
