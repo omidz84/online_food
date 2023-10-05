@@ -15,6 +15,7 @@ from .serializers import CartAddSerializers,\
     DetailOrderSerializers, \
     UpdateStatusCartSerializers
 from core.utils import translate
+from core.permisions import IsAuthenticated, IsAdmin, IsAdminOrDelivery
 
 # Create your views here.
 
@@ -103,6 +104,7 @@ class ShowCartView(GenericAPIView):
 class SaveCartView(GenericAPIView):
     serializer_class = SaveCartSerializers
     queryset = Cart.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def post(self, request: Request):
         translate(request)
@@ -127,14 +129,15 @@ class SaveCartView(GenericAPIView):
                     return Response({'msg': _('Quantity requested is more than stock')}, status.HTTP_400_BAD_REQUEST)
             request.session.clear()
 
-            return Response({'msg': _('The cart has been saved successfully')})
+            return Response({'msg': _('The cart has been saved successfully')}, status.HTTP_200_OK)
         except:
-            return Response({'msg': _('error')})
+            return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
 
 
 class ShowOrdersView(GenericAPIView):
     serializer_class = ShowOrdersPostSerializers
     queryset = Cart.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def post(self, request: Request):
         translate(request)
@@ -176,6 +179,7 @@ class ShowOrdersView(GenericAPIView):
 class ShowAllOrdersAdminView(GenericAPIView):
     serializer_class = ShowOrdersSerializers
     queryset = Cart.objects.all().order_by('-created_at')
+    permission_classes = [IsAdmin]
 
     def get(self, request: Request):
         translate(request)
@@ -217,6 +221,7 @@ class ShowAllOrdersAdminView(GenericAPIView):
 class DetailOrderView(GenericAPIView):
     serializer_class = DetailOrderSerializers
     queryset = Cart.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def post(self, request: Request):
         translate(request)
@@ -262,6 +267,7 @@ class DetailOrderView(GenericAPIView):
 class UpdateStatusCartView(GenericAPIView):
     serializer_class = UpdateStatusCartSerializers
     queryset = Cart.objects.all()
+    permission_classes = [IsAdminOrDelivery]
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
