@@ -59,7 +59,7 @@ class RemoveInCartView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         food_id = serializer.validated_data['food_id']
         food_id = str(food_id)
-        cart = request.session.get('cart', {})
+        cart = request.session.get('cart', {})  # 'cart' is the key.
         try:
             if cart[food_id] > 1:
                 cart[food_id] -= 1
@@ -69,7 +69,7 @@ class RemoveInCartView(GenericAPIView):
             return Response({'msg': _('Not available in cart')}, status.HTTP_400_BAD_REQUEST)
 
         request.session['cart'] = cart
-        request.session.modified = True
+        request.session.modified = True  # saves the changes in the session.
 
         return Response({'msg': _('Remove in cart')}, status.HTTP_200_OK)
 
@@ -80,6 +80,7 @@ class ShowCartView(GenericAPIView):
     def get(self, request: Request):
         translate(request)
         cart = request.session.get('cart', {})
+        c = request.session
         response_data = []
         final_price = 0
         for food_id, quantity in cart.items():
@@ -174,6 +175,7 @@ class ShowOrdersView(GenericAPIView):
             return Response(all_item, status.HTTP_200_OK)
         except:
             return Response({'msg': _('error')}, status.HTTP_400_BAD_REQUEST)
+    #
 
 
 class ShowAllOrdersAdminView(GenericAPIView):
