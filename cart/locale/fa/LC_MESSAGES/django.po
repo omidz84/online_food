@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 13:55+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: cart/models.py:12 cart/models.py:18 cart/models.py:23
+msgid "status"
+msgstr ""
+
+#: cart/models.py:22
+msgid "user"
+msgstr ""
+
+#: cart/models.py:24
+msgid "address"
+msgstr ""
+
+#: cart/models.py:25 cart/models.py:61
+msgid "created_at"
+msgstr ""
+
+#: cart/models.py:26
+msgid "updated_at"
+msgstr ""
+
+#: cart/models.py:32 cart/models.py:40
+msgid "cart"
+msgstr ""
+
+#: cart/models.py:33
+msgid "carts"
+msgstr ""
+
+#: cart/models.py:41
+msgid "food"
+msgstr ""
+
+#: cart/models.py:42
+msgid "price"
+msgstr ""
+
+#: cart/models.py:43
+msgid "quantity"
+msgstr ""
+
+#: cart/models.py:47
+msgid "Cart Item"
+msgstr ""
+
+#: cart/models.py:48
+msgid "Cart Items"
+msgstr ""
+
+#: cart/models.py:59
+msgid "cart_id"
+msgstr ""
+
+#: cart/models.py:60
+msgid "status_id"
+msgstr ""
+
+#: cart/models.py:67
+msgid "log status"
+msgstr ""
+
+#: cart/views.py:39 cart/views.py:43 cart/views.py:130
+msgid "Quantity requested is more than stock"
+msgstr ""
+
+#: cart/views.py:45
+msgid "food not found"
+msgstr ""
+
+#: cart/views.py:50
+msgid "Add to cart"
+msgstr ""
+
+#: cart/views.py:69
+msgid "Not available in cart"
+msgstr ""
+
+#: cart/views.py:74
+msgid "Remove in cart"
+msgstr ""
+
+#: cart/views.py:133
+msgid "The cart has been saved successfully"
+msgstr ""
+
+#: cart/views.py:135 cart/views.py:177 cart/views.py:220 cart/views.py:266
+msgid "error"
+msgstr ""
