@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 09:15+0000\n"
+"POT-Creation-Date: 2023-10-05 13:55+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1223,4 +1223,14 @@ msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:248
 msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/rest_framework_gis/fields.py:71
+msgid ""
+"Invalid format: string or unicode input unrecognized as GeoJSON, WKT EWKT or "
+"HEXEWKB."
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/rest_framework_gis/fields.py:76
+msgid "Unable to convert to python object: {}"
 msgstr ""

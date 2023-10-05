@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 13:55+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: user/models.py:16
+msgid "Title"
+msgstr ""
+
+#: user/models.py:19
+msgid "User Type"
+msgstr ""
+
+#: user/models.py:30
+msgid "Mobile Phone Number"
+msgstr ""
+
+#: user/models.py:31
+msgid "Type of User"
+msgstr ""
+
+#: user/models.py:34
+msgid "User"
+msgstr ""
+
+#: user/models.py:35
+msgid "Users"
+msgstr ""
+
+#: user/models.py:44
+msgid "User Id"
+msgstr ""
+
+#: user/models.py:45
+msgid "First Name"
+msgstr ""
+
+#: user/models.py:46
+msgid "Last Name"
+msgstr ""
+
+#: user/models.py:47
+msgid "Data of Birth"
+msgstr ""
+
+#: user/models.py:48
+msgid "Slug"
+msgstr ""
+
+#: user/models.py:55
+msgid "User Profile"
+msgstr ""
+
+#: user/models.py:56
+msgid "User Profiles"
+msgstr ""
+
+#: user/models.py:65
+msgid "user"
+msgstr ""
+
+#: user/models.py:66 user/models.py:73
+msgid "address"
+msgstr ""
+
+#: user/models.py:67
+msgid "location"
+msgstr ""
+
+#: user/models.py:74
+msgid "addresses"
+msgstr ""
+
+#: user/validators.py:27
+#, python-brace-format
+msgid "{value} is not a valid phone"
+msgstr ""
+
+#: user/views.py:47
+msgid "The code is sent to the mobile."
+msgstr ""
+
+#: user/views.py:82
+msgid "You are login successfully"
+msgstr ""
+
+#: user/views.py:99
+msgid "You are registered successfully"
+msgstr ""
+
+#: user/views.py:103
+msgid "The code is not valid"
+msgstr ""
+
+#: user/views.py:131
+msgid "Token is Expired"
+msgstr ""
+
+#: user/views.py:146
+msgid "Your Profile is Complete."
+msgstr ""
+
+#: user/views.py:188
+msgid "You Are Logged Out Successfully"
+msgstr ""
+
+#: user/views.py:190
+msgid "There is No Refresh Token in Redis"
+msgstr ""
+
+#: user/views.py:218
+msgid "user does not exist"
+msgstr ""
