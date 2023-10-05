@@ -20,6 +20,9 @@ class IsAdmin(BasePermission):
             return False
 
 
+# -----------------------------------------------------------------------
+
+
 class IsAdminOrReadOnly(BasePermission):
 
     def has_permission(self, request: Request, view):
@@ -37,6 +40,9 @@ class IsAdminOrReadOnly(BasePermission):
             return False
 
 
+# -----------------------------------------------------------------------
+
+
 class IsAdminOrDelivery(BasePermission):
 
     def has_permission(self, request: Request, view):
@@ -50,6 +56,9 @@ class IsAdminOrDelivery(BasePermission):
                 return False
         except:
             return False
+
+
+# -----------------------------------------------------------------------
 
 
 class IsAuthenticated(BasePermission):
