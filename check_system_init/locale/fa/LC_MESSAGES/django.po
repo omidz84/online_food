@@ -19,4 +19,4 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: check_system_init/views.py:20
 msgid "Token not found"
-msgstr ""
+msgstr "توکن یافت نشد"
