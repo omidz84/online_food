@@ -19,109 +19,109 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: user/models.py:16
 msgid "Title"
-msgstr ""
+msgstr "نوع کاربر"
 
 #: user/models.py:19
 msgid "User Type"
-msgstr ""
+msgstr "نوع کاربر"
 
 #: user/models.py:30
 msgid "Mobile Phone Number"
-msgstr ""
+msgstr "شماره تلفن همراه"
 
 #: user/models.py:31
 msgid "Type of User"
-msgstr ""
+msgstr "نوع کاربر"
 
 #: user/models.py:34
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
 #: user/models.py:35
 msgid "Users"
-msgstr ""
+msgstr "کاربران"
 
 #: user/models.py:44
 msgid "User Id"
-msgstr ""
+msgstr "شناسه کاربر"
 
 #: user/models.py:45
 msgid "First Name"
-msgstr ""
+msgstr "نام"
 
 #: user/models.py:46
 msgid "Last Name"
-msgstr ""
+msgstr "نام خانوادگی"
 
 #: user/models.py:47
 msgid "Data of Birth"
-msgstr ""
+msgstr "تاریخ تولد"
 
 #: user/models.py:48
 msgid "Slug"
-msgstr ""
+msgstr "اسلاگ"
 
 #: user/models.py:55
 msgid "User Profile"
-msgstr ""
+msgstr "پروفایل کاربر"
 
 #: user/models.py:56
 msgid "User Profiles"
-msgstr ""
+msgstr "پروفایل‌های کاربران"
 
 #: user/models.py:65
 msgid "user"
-msgstr ""
+msgstr "کاربر"
 
 #: user/models.py:66 user/models.py:73
 msgid "address"
-msgstr ""
+msgstr "آدرس"
 
 #: user/models.py:67
 msgid "location"
-msgstr ""
+msgstr "مکان"
 
 #: user/models.py:74
 msgid "addresses"
-msgstr ""
+msgstr "آدرس‌ها"
 
 #: user/validators.py:27
 #, python-brace-format
-msgid "{value} is not a valid phone"
-msgstr ""
+msgid "The phone number is not valid"
+msgstr "شماره تلفن همراه معتبر نیست"
 
 #: user/views.py:47
 msgid "The code is sent to the mobile."
-msgstr ""
+msgstr "کدی به تلفن همراه شما پیامک شد"
 
 #: user/views.py:82
 msgid "You are login successfully"
-msgstr ""
+msgstr "ورود با موفقیت"
 
 #: user/views.py:99
 msgid "You are registered successfully"
-msgstr ""
+msgstr "ثبت‌نام با موفقیت"
 
 #: user/views.py:103
 msgid "The code is not valid"
-msgstr ""
+msgstr "کد معتبر نیست."
 
 #: user/views.py:131
 msgid "Token is Expired"
-msgstr ""
+msgstr "توکن منقضی شد"
 
 #: user/views.py:146
 msgid "Your Profile is Complete."
-msgstr ""
+msgstr "پروفایل شما تکمیل شد"
 
 #: user/views.py:188
 msgid "You Are Logged Out Successfully"
-msgstr ""
+msgstr "خروج با موفقیت"
 
 #: user/views.py:190
 msgid "There is No Refresh Token in Redis"
-msgstr ""
+msgstr "چنین توکنی در ردیس موجود نیست."
 
 #: user/views.py:218
 msgid "user does not exist"
-msgstr ""
+msgstr "کاربری با این مشخصات وجود ندارد."
