@@ -19,48 +19,48 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: contact_us/models.py:8
 msgid "title"
-msgstr ""
+msgstr "موضوع"
 
 #: contact_us/models.py:9
 msgid "body"
-msgstr ""
+msgstr "توضیحات"
 
 #: contact_us/models.py:11
 msgid "phone number"
-msgstr ""
+msgstr "شماره تلفن همراه"
 
 #: contact_us/models.py:12
 msgid "full_name"
-msgstr ""
+msgstr "نام و نام خانوادگی"
 
 #: contact_us/models.py:13
 msgid "is read by admin"
-msgstr ""
+msgstr "ادمین مشاهده کرد"
 
 #: contact_us/models.py:14
 msgid "response"
-msgstr ""
+msgstr "پاسخ"
 
 #: contact_us/models.py:15
 msgid "created at"
-msgstr ""
+msgstr "تاریخ ایجاد"
 
 #: contact_us/models.py:16
 msgid "updated at"
-msgstr ""
+msgstr "تاریخ به روزرسانی"
 
 #: contact_us/models.py:19
 msgid "contact us"
-msgstr ""
+msgstr "تماس با ما"
 
 #: contact_us/models.py:20
 msgid "contacts us"
-msgstr ""
+msgstr "تماس با ما"
 
 #: contact_us/views.py:28
 msgid "The Operation Completed Successfully"
-msgstr ""
+msgstr "عملیات با موفقیت انجام شد"
 
 #: contact_us/views.py:29
 msgid "Please Enter Correct Information."
-msgstr ""
+msgstr "لطفا اطلاعات را درست وارد کنید"

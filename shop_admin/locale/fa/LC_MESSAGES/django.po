@@ -19,60 +19,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: shop_admin/models.py:9
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
 #: shop_admin/models.py:10
 msgid "Cart"
-msgstr ""
+msgstr "سبد خرید"
 
 #: shop_admin/models.py:11
 msgid "Delivered / Not Delivered"
-msgstr ""
+msgstr "تحویل مشتری / عدم تحویل مشتری"
 
 #: shop_admin/models.py:12
 msgid "Created at"
-msgstr ""
+msgstr "تاریخ ایجاد"
 
 #: shop_admin/models.py:13
 msgid "Updated at"
-msgstr ""
+msgstr "تاریخ به روزرسانی"
 
 #: shop_admin/models.py:19
 msgid "Delivery"
-msgstr ""
+msgstr "پیک"
 
 #: shop_admin/models.py:20
 msgid "Deliveries"
-msgstr ""
+msgstr "پیک‌ها"
 
 #: shop_admin/views.py:42
 msgid "Login Successfully"
-msgstr ""
+msgstr "ورود با موفقیت"
 
 #: shop_admin/views.py:54
 msgid "Registered Successfully"
-msgstr ""
+msgstr "ثبت نام با موفقیت"
 
 #: shop_admin/views.py:70
 msgid "The Profile is Completed"
-msgstr ""
+msgstr "پروفایل تکمبل شد"
 
 #: shop_admin/views.py:73
 msgid "Please Enter the Correct Information"
-msgstr ""
+msgstr "لطفا اطلاعات را درست وارد کنید"
 
 #: shop_admin/views.py:148
 msgid "There is no any Cart"
-msgstr ""
+msgstr "چنین سبد خریدی وجود ندارد"
 
 #: shop_admin/views.py:187
 msgid "This delivery id does not exist."
-msgstr ""
+msgstr "چنین شناسه‌ای برای پیک موجود نیست"
 
 #: shop_admin/views.py:210
 msgid "Successfully Done"
-msgstr ""
+msgstr "عملیات با موفقیت انجام شد"
 
 #: shop_admin/views.py:212
 msgid "Error"
-msgstr ""
+msgstr "خطایی روی داده است"
