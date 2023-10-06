@@ -19,59 +19,59 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: cart/models.py:12 cart/models.py:18 cart/models.py:23
 msgid "status"
-msgstr ""
+msgstr "وضعیت"
 
 #: cart/models.py:22
 msgid "user"
-msgstr ""
+msgstr "کاربر"
 
 #: cart/models.py:24
 msgid "address"
-msgstr ""
+msgstr "آدرس"
 
 #: cart/models.py:25 cart/models.py:61
 msgid "created_at"
-msgstr ""
+msgstr "تارخ ایجاد"
 
 #: cart/models.py:26
 msgid "updated_at"
-msgstr ""
+msgstr "بروزرسانی"
 
 #: cart/models.py:32 cart/models.py:40
 msgid "cart"
-msgstr ""
+msgstr "سبد خرید"
 
 #: cart/models.py:33
 msgid "carts"
-msgstr ""
+msgstr "سبد های خرید"
 
 #: cart/models.py:41
 msgid "food"
-msgstr ""
+msgstr "غذا"
 
 #: cart/models.py:42
 msgid "price"
-msgstr ""
+msgstr "قیمت"
 
 #: cart/models.py:43
 msgid "quantity"
-msgstr ""
+msgstr "تعداد"
 
 #: cart/models.py:47
 msgid "Cart Item"
-msgstr ""
+msgstr "کالای سبد خرید"
 
 #: cart/models.py:48
 msgid "Cart Items"
-msgstr ""
+msgstr "کالاهای سبد خرید"
 
 #: cart/models.py:59
 msgid "cart_id"
-msgstr ""
+msgstr "شناسه سبد خرید"
 
 #: cart/models.py:60
 msgid "status_id"
-msgstr ""
+msgstr "شناسه وضعیت"
 
 #: cart/models.py:67
 msgid "log status"
@@ -79,28 +79,28 @@ msgstr ""
 
 #: cart/views.py:39 cart/views.py:43 cart/views.py:130
 msgid "Quantity requested is more than stock"
-msgstr ""
+msgstr "مقدار درخواستی بیشتر از موجودی است"
 
 #: cart/views.py:45
 msgid "food not found"
-msgstr ""
+msgstr "غذا موجود نیست"
 
 #: cart/views.py:50
 msgid "Add to cart"
-msgstr ""
+msgstr "اضافه کردن به سبد خرید"
 
 #: cart/views.py:69
 msgid "Not available in cart"
-msgstr ""
+msgstr "در سبد خرید موجود نیست"
 
 #: cart/views.py:74
 msgid "Remove in cart"
-msgstr ""
+msgstr "حذف از سبد خرید"
 
 #: cart/views.py:133
 msgid "The cart has been saved successfully"
-msgstr ""
+msgstr "سبد خرید با موفقیت ثبت شد"
 
 #: cart/views.py:135 cart/views.py:177 cart/views.py:220 cart/views.py:266
 msgid "error"
-msgstr ""
+msgstr "مشکلی رخ داده"
