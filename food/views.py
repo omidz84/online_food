@@ -78,7 +78,7 @@ class FoodCategoryView(generics.GenericAPIView):
             serializer = FoodCategorySerializer(instance, many=True)
             return Response(serializer.data, status.HTTP_200_OK)
         except ObjectDoesNotExist:
-            return Response({"msg": [_('this category_id might be wrong')]}, status.HTTP_400_BAD_REQUEST)
+            return Response({"msg": [_('this category_id does not exist')]}, status.HTTP_400_BAD_REQUEST)
 
 
 # -------------------------------------------------------------------
