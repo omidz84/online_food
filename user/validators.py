@@ -24,5 +24,5 @@ def check_phone(value: str) -> str:
     if bool(patter4.match(value)):
         return "0" + value[3:]
 
-    raise ValidationError(_(f'{value} is not a valid phone'))
+    raise ValidationError(_('The phone number is not valid'))
 

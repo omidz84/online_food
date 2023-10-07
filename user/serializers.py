@@ -71,9 +71,30 @@ class UserLogoutSerializer(serializers.Serializer):
 #  ------------------------------------------------------------
 
 
+class MyUserSerializers(serializers.ModelSerializer):
+    type = UserTypeSerializer(read_only=True)
+
+    class Meta:
+        model = MyUser
+        fields = ['phone_number', 'type']
+
+
+#  ------------------------------------------------------------
+
+
 class AddressSerializers(GeoFeatureModelSerializer):
 
     class Meta:
         model = Address
         geo_field = "location"
-        fields = '__all__'
+        fields = ['address', 'user', 'location']
+
+
+#  ------------------------------------------------------------
+
+
+class UserAddressViewSerializer(serializers.Serializer):
+    user = serializers.IntegerField(required=True)
+
+
+

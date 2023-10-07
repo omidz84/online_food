@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MyUser, UserProfile, UserType
+from .models import MyUser, UserProfile, UserType, Address
 
 # Register your models here.
 
@@ -8,7 +8,7 @@ from .models import MyUser, UserProfile, UserType
 # Introducing the models to Django admin site.
 # In app "user", we have defined two models: MyUser, UserProfile.
 @admin.register(MyUser)
-class UserAdmin(admin.ModelAdmin):
+class MyUserAdmin(admin.ModelAdmin):
     pass
 
 
@@ -19,4 +19,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(UserType)
 class UserTypeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
     pass
