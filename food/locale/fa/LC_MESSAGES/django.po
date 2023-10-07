@@ -19,56 +19,56 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 #: food/models.py:6
 msgid "title"
-msgstr ""
+msgstr "عنوان"
 
 #: food/models.py:7 food/models.py:30
 msgid "description"
-msgstr ""
+msgstr "توضیحات"
 
 #: food/models.py:8
 msgid "parent"
-msgstr ""
+msgstr "سر دسته"
 
 #: food/models.py:9 food/models.py:32
 msgid "image"
-msgstr ""
+msgstr "تصویر"
 
 #: food/models.py:11 food/models.py:35
 msgid "slug"
-msgstr ""
+msgstr "اسلاگ"
 
 #: food/models.py:21
 msgid "Food category"
-msgstr ""
+msgstr "دسته بندی غذا"
 
 #: food/models.py:22
 msgid "Food categories"
-msgstr ""
+msgstr "دسته بندی های غذا"
 
 #: food/models.py:29
 msgid "name"
-msgstr ""
+msgstr "نام"
 
 #: food/models.py:31
 msgid "price"
-msgstr ""
+msgstr "قیمت"
 
 #: food/models.py:33
 msgid "category"
-msgstr ""
+msgstr "دسته بندی"
 
 #: food/models.py:34
 msgid "count"
-msgstr ""
+msgstr "تعداد"
 
 #: food/models.py:46
 msgid "Food"
-msgstr ""
+msgstr "غذا"
 
 #: food/models.py:47
 msgid "Foods"
-msgstr ""
+msgstr "غذا ها"
 
 #: food/views.py:81
-msgid "this category_id might be wrong"
-msgstr ""
+msgid "this category_id does not exist"
+msgstr "این دسته بندی موجود نیست"
