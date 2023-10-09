@@ -32,6 +32,7 @@ class MyUser(models.Model):
 
     class Meta:
         verbose_name = _("User")
+        verbose_name_plural = _("Users")
 
     def __str__(self):
         return f"Type: {self.type} -- Phone Number: {self.phone_number}"
@@ -52,6 +53,7 @@ class UserProfile(models.Model):
 
     class Meta:
         verbose_name = _("User Profile")
+        verbose_name_plural = _("User Profiles")
 
     def __str__(self):
         return f"َUser: {self.user} -- Name: {self.first_name} {self.last_name}"
@@ -60,5 +62,15 @@ class UserProfile(models.Model):
 
 
 class Address(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name=_('user'))
     address = model.TextField(verbose_name=_('address'))
     location = model.GeometryField(geography=True, null=True, blank=True, verbose_name=_('location'))
+
+    def __str__(self):
+        return f"{self.user} / {self.address}"
+
+    class Meta:
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
+
+

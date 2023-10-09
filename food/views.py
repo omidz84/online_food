@@ -1,4 +1,5 @@
 from django.utils.translation import gettext as _
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -19,8 +20,8 @@ class FoodCategoryCreate(generics.ListCreateAPIView):
 
     def list(self, request, *args, **kwargs):
         translate(request)
-        queryset = self.get_queryset().filter(parent=None)
-        serializer = self.serializer_class(queryset, many=True)
+        instance = self.get_queryset().filter(parent=None)
+        serializer = self.serializer_class(instance, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
@@ -73,11 +74,11 @@ class FoodCategoryView(generics.GenericAPIView):
         translate(request)
         try:
             parent_id = request.data['food_category_id']
-            queryset = self.queryset(parent=parent_id)
-            serializer = FoodCategorySerializer(queryset, many=True)
+            instance = self.queryset(parent=parent_id)
+            serializer = FoodCategorySerializer(instance, many=True)
             return Response(serializer.data, status.HTTP_200_OK)
-        except:
-            return Response({"msg": [_('this category_id might be wrong')]}, status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            return Response({"msg": [_('this category_id does not exist')]}, status.HTTP_400_BAD_REQUEST)
 
 
 # -------------------------------------------------------------------
@@ -94,6 +95,9 @@ class CreatFoodView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status.HTTP_201_CREATED)
+
+
+# -------------------------------------------------------------------
 
 
 class DetailFoodView(generics.RetrieveUpdateDestroyAPIView):
@@ -133,6 +137,6 @@ class FoodViewInEachCategory(generics.GenericAPIView):
     def post(self, request):
         translate(request)
         category_id = request.data['food_category_id']
-        queryset = self.queryset(category=category_id)
-        serializer = FoodSerializer(queryset, many=True)
+        instance = self.queryset(category=category_id)
+        serializer = FoodSerializer(instance, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
